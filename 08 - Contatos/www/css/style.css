@@ -1,0 +1,9 @@
+.sucesso {
+	color: #5cb85c;
+}
+
+.erro {
+	font-size: 14px;
+	text-transform: uppercase;
+	color: #B83E2C;
+}

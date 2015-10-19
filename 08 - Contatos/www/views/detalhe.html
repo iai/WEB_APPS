@@ -1,0 +1,14 @@
+<ion-view title="Detalhe do Contato">
+	
+	<ion-content class="padding">
+
+		<img src="{{Contato.photos[0].value}}" ng-show="Contato.photos.length > 0">
+		<img src="http://directaerojobs.com/web/uploads/photoIndisponiblePuzzle.jpg" ng-hide="Contato.photos.length > 0" height="100" width="100">
+
+		<h2>{{Contato.id}} - {{Contato.name.formatted}}</h2>
+		<p ng-repeat="email in Contato.emails">{{email.type}}: {{email.value}}</p>
+		<p ng-repeat="telefone in Contato.phoneNumbers">{{telefone.type}}: {{telefone.value}}</p>
+
+	</ion-content>
+
+</ion-view>

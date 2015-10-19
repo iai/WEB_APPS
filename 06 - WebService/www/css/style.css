@@ -1,0 +1,29 @@
+.sobre {
+	background: #CCCCCC;
+	text-align: center;
+	font: 16px "Helvetica Neue", Helvetica, Arial;
+	height: 100%;
+	color: #FFFFFF;
+	padding-top: 2%;
+
+}
+
+.sobre h2 {
+	color: #FFFFFF !important;
+}
+
+.sucesso {
+	color: green;
+}
+
+.erro {
+	color: red;
+}
+
+.backdrop-loading {
+	/*background-color: #000 !important;*/
+}
+
+.loading {
+	background-color: #FFF !important;
+}

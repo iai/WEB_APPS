@@ -1,0 +1,18 @@
+<ion-modal-view>
+
+	<ion-header-bar class="bar-dark">
+		<h2 class="title">Endereços</h2>
+		<div class="buttons">
+			<button class="button button-clear" ng-click="fechaEndereco()">X</button>
+		</div>
+	</ion-header-bar>
+
+	<ion-content>
+		<ion-list>
+			<ion-item ng-repeat="endereco in enderecos" ng-click="marcaEndereco(endereco)">
+				<p>{{endereco}}</p>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+
+</ion-modal-view>

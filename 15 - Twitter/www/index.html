@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <script src="lib/sha.js"></script>
+    <script src="lib/ng-cordova.min.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+  </head>
+  <body ng-app="Twitter">
+
+    <ion-pane>
+      <ion-header-bar class="bar-balanced">
+        <h1 class="title">Twitter</h1>
+      </ion-header-bar>
+      <ion-content class="padding" ng-controller="TwitterController">
+
+        <ion-refresher on-refresh="atualizar()"></ion-refresher>
+
+        <span ng-show="tweets.length == 0">Carregando tweets...</span>
+
+        <div class="list card" ng-repeat="tweet in tweets">
+          <div class="item item-avatar">
+            <img ng-src="{{tweet.user.profile_image_url}}">
+            <h2>{{tweet.user.name}}</h2>
+            <p>{{ajustaData(tweet.created_at) | date: 'dd/MM/yyyy HH:mm:ss'}}</p>
+          </div>
+
+          <div class="item item-body">
+            <p ng-bind-html="tweet.text"></p>
+            <img ng-if="tweet.extended_entities" ng-src="{{tweet.extended_entities.media[0].media_url}}" style="width:100%">
+          </div>
+
+
+        </div>
+
+      </ion-content>
+    </ion-pane>
+  </body>
+</html>

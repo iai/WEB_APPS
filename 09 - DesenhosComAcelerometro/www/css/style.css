@@ -1,0 +1,18 @@
+.paleta {
+	border: 2px solid #777;
+	height: 36px;
+	width: 36px;
+}
+
+.marcado {
+	border: 2px dashed #fff;
+}
+
+#conteudoQuadro {
+	overflow: hidden;
+	border: 1px solid;
+}
+
+#quadro {
+	background-color: #ddd;
+}

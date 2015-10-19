@@ -1,0 +1,11 @@
+<ion-view title="Detalhe do Usuário">
+	<ion-content class="padding" scroll="false">
+
+		<h2>{{Usuario.nome}}</h2>
+		<p>{{Usuario.email}}</p>
+		<p>{{Usuario.senha}}</p>
+
+		<p ng-bind-html="Usuario.site | linkBlank"></p>
+
+	</ion-content>
+</ion-view>

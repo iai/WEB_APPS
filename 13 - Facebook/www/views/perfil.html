@@ -1,0 +1,21 @@
+<ion-view title="Meu Perfil">
+	<ion-content class="padding">
+
+		<ion-list>
+
+			<ion-item class="item-avatar item-divider" style="height: 70px">
+				<img src="https://graph.facebook.com/{{perfil.id}}/picture">
+				<h2>{{perfil.first_name}}</h2>
+				<p>{{perfil.last_name}}</p>
+			</ion-item>
+
+			<ion-item class="item-text-wrap">
+				<h2>{{perfil.name}}</h2>
+				<p>{{perfil.email}}</p>
+				<p>{{perfil.gender}}</p>
+			</ion-item>
+
+		</ion-list>
+
+	</ion-content>
+</ion-view>

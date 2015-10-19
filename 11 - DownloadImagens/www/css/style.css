@@ -1,0 +1,17 @@
+.progresso{
+	height: 30px;
+	border-radius: 5px;
+	background: #7db9e8;
+	overflow: hidden;
+	text-align: center;
+}
+
+.slides{
+	margin: 0 auto;
+	max-width: 600px;
+}
+
+.slider-slide{
+	height: 350px;
+	text-align: center;
+}

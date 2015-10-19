@@ -1,0 +1,42 @@
+<ion-view title="Usuários Cadastrados">
+
+	<ion-header-bar class="bar-subheader item-input-inset">
+
+		<label class="item-input-wrapper">
+			<i class="icon ion-search placeholder-icon"></i>
+			<input type="search" placeholder="Buscar" ng-change="filtrar()" ng-model="buscar">
+		</label>
+		<button class="button button-clear" ng-click="limparFiltro()">Cancelar</button>
+
+	</ion-header-bar>
+
+	<ion-content class="padding">
+
+		<ion-refresher pulling-text="Deslize para atualizar" on-refresh="atualizar()">
+		</ion-refresher>
+
+		<ion-list show-delete="false">
+
+			<ion-item class="item-remove-animate item-icon-right item-avatar" ng-repeat="item in dadosFiltrados">
+
+				<img ng-show="item.foto != 'undefined' && item.foto != ''" ng-src="data:image/jpeg;base64, {{item.foto}}" />
+				<h2>{{item.id}} - {{item.nome}}</h2>
+				<p>{{item.email}}</p>
+			
+				<ion-option-button class="button-positive" ui-sref="aplicativo.editar({id:item.id})">
+					Editar
+				</ion-option-button>
+
+				<ion-option-button class="button-assertive" ng-click="apagar(item.id)">
+					Apagar
+				</ion-option-button>
+
+			</ion-item>
+
+			
+
+		</ion-list>
+
+	</ion-content>
+
+</ion-view>

@@ -1,0 +1,23 @@
+<ion-view title="Listagem de Usuários">
+	<ion-content class="padding">
+
+		<ion-refresher pulling-text="Deslize para atualizar" on-refresh="atualizar()"></ion-refresher>
+
+		<ion-list>
+			<ion-item class="item-icon-right" ng-repeat="item in registros" href="#/aplicativo/detalhe/{{item.id}}">
+				<h2>{{item.id}} - {{item.PrimeiroNome}}</h2>
+				<p>{{item.Email}}</p>
+
+				<i class="icon ion-chevron-right icon-acessory"></i>
+
+				<ion-option-button class="button-positive" ng-click="nome(item.Nome)">
+					Nome Completo
+				</ion-option-button>
+
+			</ion-item>
+		</ion-list>
+
+		<ion-infinite-scroll on-infinite="carregaMais()"></ion-infinite-scroll>
+
+	</ion-content>
+</ion-view>

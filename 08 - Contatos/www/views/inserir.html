@@ -1,0 +1,57 @@
+<ion-view>
+	<ion-content class="padding">
+
+		<span class="sucesso" ng-show="sucesso">Contato salvo com sucesso</span>
+
+		<form name="formContatos" ng-submit="salvar(formContatos.$valid, Contato)" novalidate>
+
+			<div class="padding">
+				<label class="item item-input">
+					<input type="text" name="PrimeiroNome" placeholder="Digite seu primeiro nome" ng-model="Contato.PrimeiroNome" required>
+				</label>
+				<span class="erro" ng-show="formContatos.PrimeiroNome.$error.required && formContatos.$submitted">O campo primeiro nome é obrigatório</span>
+			</div>
+
+			<div class="padding">
+				<label class="item item-input">
+					<input type="text" name="Sobrenome" placeholder="Digite seu sobrenome" ng-model="Contato.Sobrenome" required>
+				</label>
+				<span class="erro" ng-show="formContatos.Sobrenome.$error.required && formContatos.$submitted">O campo sobrenome é obrigatório</span>
+			</div>
+
+			<div class="padding">
+				<label class="item item-input">
+					<input type="email" name="Email" placeholder="Digite seu E-mail" ng-model="Contato.Email" required>
+				</label>
+				<span class="erro" ng-show="formContatos.Email.$error.required && formContatos.$submitted">O campo e-mail é obrigatório</span>
+				<span class="erro" ng-show="formContatos.Email.$error.email">Digite um e-mail válido</span>
+			</div>
+
+			<div class="padding">
+				<label class="item item-input">
+					<input type="tel" name="Telefone" placeholder="Digite seu Telefone" ng-model="Contato.Telefone" required>
+				</label>
+				<span class="erro" ng-show="formContatos.Telefone.$error.required && formContatos.$submitted">O campo telefone é obrigatório</span>
+			</div>
+
+			<div class="padding">
+				<label class="item item-input item-select">
+					<div class="input-label">
+						Tipo de Telefone: 
+					</div>
+					<select name="TelefoneTipo" ng-model="Contato.TelefoneTipo">
+						<option ng-repeat="select in itensSelect" value="{{select.valor}}">{{select.texto}}</option>
+					</select>
+				</label>
+			</div>
+
+			<div class="padding">
+				<button type="submit" class="button button-block button-positive">Salvar</button>
+				<button type="button" class="button button-block button-positive" ng-click="limpar(formContatos)">Novo</button>
+			</div>
+
+
+		</form>
+
+	</ion-content>
+</ion-view>

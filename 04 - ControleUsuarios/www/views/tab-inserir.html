@@ -1,0 +1,45 @@
+<ion-view title="Inserir Usuários">
+	<ion-content class="padding">
+
+		<span class="sucesso" ng-show="sucesso" ng-cloak>Dados salvos com sucesso</span>
+
+		<form name="frmUsuario" ng-submit="salvar(frmUsuario.$valid, Usuario)" novalidate>
+			<div class="padding">
+				<label class="item item-input">
+					<input type="text" placeholder="Nome" name="nome" ng-model="Usuario.nome" ng-minlength="minlength" required> 
+				</label>
+				<span class="erro" ng-show="frmUsuario.nome.$error.required && frmUsuario.$submitted">O campo nome é obrigatório</span>
+				<span class="erro" ng-show="frmUsuario.nome.$error.minlength">Devem ser preenchidos no mínimo {{minlength}} caracteres</span>
+			</div>
+
+			<div class="padding">
+				<label class="item item-input">
+					<input type="email" placeholder="E-mail" name="email" ng-model="Usuario.email" required>
+				</label>
+				<span class="erro" ng-show="frmUsuario.email.$error.required && frmUsuario.$submitted">O campo e-mail é obrigatório</span>
+				<span class="erro" ng-show="frmUsuario.email.$error.email">Digite um e-mail válido</span>
+			</div>
+
+			<div class="padding">
+				<label class="item item-input">
+					<input type="password" placeholder="Senha" name="senha" ng-model="Usuario.senha" required>
+				</label>
+				<span class="erro" ng-show="frmUsuario.senha.$error.required && frmUsuario.$submitted">O campo senha é obrigatório</span>
+			</div>
+
+			<div class="padding">
+				<label class="item item-input">
+					<input type="text" placeholder="Site" name="site" ng-model="Usuario.site" required>
+				</label>
+				<span class="erro" ng-show="frmUsuario.site.$error.required && frmUsuario.$submitted">O campo site é obrigatório</span>
+			</div>
+
+			<div class="padding">
+				<button type="submit" ng-disabled="!frmUsuario.$valid" class="button button-block button-positive">Salvar</button>
+				<button type="button" class="button button-block button-positive" ng-click="reset(frmUsuario);">Novo</button>
+			</div>
+
+		</form>
+
+	</ion-content>
+</ion-view>

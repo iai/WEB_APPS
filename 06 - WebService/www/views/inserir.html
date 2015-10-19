@@ -1,0 +1,33 @@
+<ion-view title="Inserir Usuários">
+	<ion-content class="padding">
+
+		<span class="sucesso" ng-show="sucesso">Dados salvos com sucesso</span>
+		<span class="erro" ng-show="erroWS">{{erroWS}}</span>
+
+		<form name="frmUsuario" ng-submit="salvar(frmUsuario.$valid, Usuario)" novalidate>
+
+			<div class="padding">
+				<label class="item item-input">
+					<input type="text" name="nome" placeholder="Nome" ng-model="Usuario.nome" ng-minlength="minlength" required>
+				</label>
+				<span class="erro" ng-show="frmUsuario.nome.$error.required && frmUsuario.$submitted">O campo nome é obrigatório</span>
+				<span class="erro" ng-show="frmUsuario.nome.$error.minlength">Obrigatório preencher {{minlength}} caracteres</span>
+			</div>
+
+			<div class="padding">
+				<label class="item item-input">
+					<input type="email" name="email" placeholder="E-mail" ng-model="Usuario.email" required>
+				</label>
+				<span class="erro" ng-show="frmUsuario.email.$error.required && frmUsuario.$submitted">O campo e-mail é obrigatório</span>
+				<span class="erro" ng-show="frmUsuario.email.$error.email">Digita direito seu e-mail</span>
+			</div>
+
+			<div class="padding">
+				<button type="submit" class="button button-block button-positive">Salvar</button>
+				<button type="button" class="button button-block button-positive" ng-click="reset(frmUsuario)">Novo</button>
+			</div>
+
+		</form>
+
+	</ion-content>
+</ion-view>
