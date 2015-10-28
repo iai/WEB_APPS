@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+  </head>
+  <body ng-app="PushNotifications">
+
+    <ion-pane>
+      <ion-header-bar class="bar-stable">
+        <h1 class="title">Notificações via Push</h1>
+      </ion-header-bar>
+      <ion-content class="padding" ng-controller="PushController">
+
+        <span class="sucesso" ng-show="sucesso">Registrado com sucesso!</span>
+
+        <div class="card" ng-show="notificacao">
+          <div class="item item-divider">
+            Dados da notificação
+          </div>
+          <div class="item item-text-wrap">
+            <p>Título: {{notificacao.title}}</p>
+            <p>Texto: {{notificacao.message}}</p>
+            <p>Data: {{notificacao.additionalData*1000 | date:'dd/MM/yyyy HH:mm:ss'}}</p>
+            <p>Quantidade: {{notificacao.count}}</p>
+            <p>Som: {{notificacao.sound}}</p>
+            <p>Dados personalizados: {{notificacao.data | json}}</p>
+          </div>
+        </div>
+
+        <div class="padding">
+          <button type="button" class="button button-block button-positive" ng-click="registrar()">Registrar</button>
+        </div>
+
+      </ion-content>
+    </ion-pane>
+  </body>
+</html>
