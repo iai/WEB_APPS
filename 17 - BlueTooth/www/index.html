@@ -20,14 +20,34 @@
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
+    <script src="js/BlueToothController.js"></script>
+    <script src="js/BlueToothService.js"></script>
   </head>
-  <body ng-app="starter">
+  <body ng-app="BlueTooth">
 
     <ion-pane>
       <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
+        <h1 class="title">BlueTooth</h1>
       </ion-header-bar>
-      <ion-content>
+      <ion-content ng-controller="BlueToothController">
+      <div class="row text-center">
+        <div class="col"><a class="button button-balanced button-small" ng-click="inicia()">Inicia</a></div>
+        <div class="col"><a class="button button-assertive button-small" ng-click="para()">Para</a></div>
+      </div>
+      <div class="row">
+        {{status}}
+      </div>
+      
+      <div ng-show="dispositivos.length > 0">
+        <h2>Devices</h2>
+        <ion-list>
+          <ion-item ng-repeat="dispositivo in dispositivos" class="item-icon-right">
+            {{dispositivo.name}}
+            <div><small>&lt;{{dispositivo.address}}&gt;</small></div>
+            <i class="icon ion-chevron-right"></i>
+          </ion-item>
+        </ion-list>
+      </div>
       </ion-content>
     </ion-pane>
   </body>
