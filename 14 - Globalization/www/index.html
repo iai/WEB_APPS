@@ -11,7 +11,7 @@
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
-
+    
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
@@ -20,27 +20,28 @@
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
-    <script src="js/Traducao.js"></script>
+    <script src="js/TraducaoService.js"></script>
     <script src="js/TraducaoController.js"></script>
   </head>
   <body ng-app="Globalization">
 
     <ion-pane>
       <ion-header-bar class="bar-stable">
-        <h1 class="title">Aplicativo Global</h1>
+        <h1 class="title">{{idioma.TITULO}}</h1>
       </ion-header-bar>
       <ion-content>
-        
-        <div class="card" >
+
+        <div class="card">
           <div class="item item-divider">
             {{idioma.OLA_MUNDO}}
           </div>
           <div class="item item-text-wrap" ng-controller="TraducaoController" ng-show="preferencias">
-            <p>Data: {{preferencias.data}}</p>
-            <p>Dia da Semana: {{preferencias.dia_semana}}</p>
-            <p>Número: {{preferencias.numero}}</p>
+            <p>{{idioma.DATA}}: {{preferencias.data}}</p>
+            <p>{{idioma.DIA_SEMANA}}: {{preferencias.dia_semana}}</p>
+            <p>{{idioma.NUMERO}}: {{preferencias.numero}}</p>
           </div>
         </div>
+
       </ion-content>
     </ion-pane>
   </body>

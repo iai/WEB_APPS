@@ -1,3 +1,7 @@
 {
-    "OLA_MUNDO" : "Hello world"
+	"OLA_MUNDO"  : "Hello world",
+	"DATA"       : "Date",
+	"DIA_SEMANA" : "Day of week",
+	"NUMERO"     : "Number",
+	"TITULO"     : "Globalization Application"
 }

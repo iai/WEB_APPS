@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('Globalization', ['ionic', 'Globalization.services', 'Globalization.controllers'])
 
-.run(function($ionicPlatform, Traducao, $rootScope) {
+.run(function($ionicPlatform, $rootScope, TraducaoService) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -17,12 +17,15 @@ angular.module('Globalization', ['ionic', 'Globalization.services', 'Globalizati
     }
 
     //Busca o idioma
-    Traducao.getIdioma().then(function(retorno){
-        $rootScope.idioma = retorno;
-        navigator.splashscreen.hide();
+    TraducaoService.buscaIdioma().then(function(sucesso){
+      console.log(sucesso);
+      $rootScope.idioma = sucesso;
+      navigator.splashscreen.hide();
     }, function(erro){
-        alert(angular.toJson(erro));
-    })
+      alert(angular.toJson(erro));
+    });
 
   });
 })
+
+.constant('Idiomas', ['pt', 'en', 'es'])
