@@ -2,9 +2,9 @@
 
 	<ion-content class="padding">
 
-		<span class="sucesso" ng-show="sucesso">Dados salvos sucesso</span>
+		<span class="sucesso" ng-show="sucesso">Dados salvos com sucesso</span>
 
-		<form name="frmUsuario" ng-submit="salvar(frmUsuario.$valid, Usuario)" novalidate>
+		<form name="frmUsuario" ng-submit="salvar(frmUsuario.$valid)" novalidate>
 
 			<input type="hidden" name="id" ng-model="Usuario.id">
 
@@ -18,7 +18,7 @@
 			<div class="padding">
 				<label class="item item-input">
 					<button type="button" class="button button-block" ng-hide="Usuario.foto" ng-click="tirarFoto()">Tirar uma foto</button>
-					<img ng-show="Usuario.foto" ng-src="data:image/jpeg;base64, {{Usuario.foto}}" />
+					<img ng-show="Usuario.foto" ng-src="data:image/jpeg;base64, {{Usuario.foto}}">
 				</label>
 			</div>
 
@@ -26,13 +26,29 @@
 				<label class="item item-input">
 					<input type="email" placeholder="E-mail" name="email" ng-model="Usuario.email" required>
 				</label>
-				<span class="erro" ng-show="frmUsuario.email.$error.required && frmUsuario.$submitted">O campo e-mail é obrigatório</span>
-				<span class="erro" ng-show="frmUsuario.email.error.email">Formato inválido de e-mail</span>
+				<span class="erro" ng-show="frmUsuario.email.$error.required && frmUsuario.$submitted">O campo E-mail é obrigatório</span>
+				<span class="erro" ng-show="frmUsuario.email.$error.email">Formato inválido de e-mail</span>
+			</div>
+
+			<div class="padding">
+				<label class="item item-input">
+					<input type="password" placeholder="Senha" name="senha" ng-model="Usuario.senha" ng-pattern="/(?=.*[a-z])(?=.*[^a-zA-Z])/" required>
+				</label>
+				<span class="erro" ng-show="frmUsuario.senha.$error.required && frmUsuario.$submitted">O campo Senha é obrigatório</span>
+				<span class="erro" ng-show="frmUsuario.senha.$error.pattern">Sua senha não está forte o bastante, tente incluir números ou caracteres especiais</span>
+			</div>
+
+			<div class="padding">
+				<label class="item item-input">
+					<input type="password" placeholder="Confirmação de Senha" name="confirma_senha" ng-model="Usuario.confirmaSenha" compare-com="Usuario.senha" required>
+				</label>
+				<span class="erro" ng-show="frmUsuario.confirma_senha.$error.required && frmUsuario.$submitted">O campo Confirmação de Senha é obrigatório</span>
+				<span class="erro" ng-show="frmUsuario.confirma_senha.$error.compareCom">O campo confirmação de senha precisa ser idêntico ao campo senha</span>
 			</div>
 
 			<div class="padding">
 				<button type="submit" class="button button-block button-positive">Salvar</button>
-				<button type="button" class="button button-block button-positive" ng-click="limpar(frmUsuario)">Novo</button>
+				<button type="button" class="button button-block button-assertive" ng-click="limpar(frmUsuario)">Limpar</button>
 			</div>
 
 		</form>

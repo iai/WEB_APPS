@@ -1,10 +1,23 @@
-<ion-view title="Usuários Cadastrados">
+<ion-view hide-nav-bar="true">
+
+	<ion-header-bar>
+		<div class="buttons">
+			<button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+		</div>
+
+		<h1 class="title">Usuários Cadastrados</h1>
+		
+		<div class="buttons">
+			<button class="button" ng-click="exibindoDelete = true;" ng-hide="exibindoDelete">Apagar</button>
+			<button class="button" ng-click="exibindoDelete = false;" ng-show="exibindoDelete">OK</button>
+		</div>
+	</ion-header-bar>
 
 	<ion-header-bar class="bar-subheader item-input-inset">
 
 		<label class="item-input-wrapper">
 			<i class="icon ion-search placeholder-icon"></i>
-			<input type="search" placeholder="Buscar" ng-change="filtrar()" ng-model="buscar">
+			<input type="search" placeholder="Buscar" ng-model="buscar">
 		</label>
 		<button class="button button-clear" ng-click="limparFiltro()">Cancelar</button>
 
@@ -15,9 +28,8 @@
 		<ion-refresher pulling-text="Deslize para atualizar" on-refresh="atualizar()">
 		</ion-refresher>
 
-		<ion-list show-delete="false">
-
-			<ion-item class="item-remove-animate item-icon-right item-avatar" ng-repeat="item in dadosFiltrados">
+		<ion-list show-delete="exibindoDelete">
+			<ion-item class="item-remove-animate item-icon-right item-avatar" ng-repeat="item in dados | filter:buscar">
 
 				<img ng-show="item.foto != 'undefined' && item.foto != ''" ng-src="data:image/jpeg;base64, {{item.foto}}" />
 				<h2>{{item.id}} - {{item.nome}}</h2>
@@ -27,14 +39,9 @@
 					Editar
 				</ion-option-button>
 
-				<ion-option-button class="button-assertive" ng-click="apagar(item.id)">
-					Apagar
-				</ion-option-button>
+				<ion-delete-button class="ion-minus-circled" ng-click="apagar(item.id)"></ion-delete-button>
 
 			</ion-item>
-
-			
-
 		</ion-list>
 
 	</ion-content>

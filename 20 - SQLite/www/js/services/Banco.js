@@ -1,9 +1,9 @@
-services.factory('Banco', function($q){
+services.factory('Banco', function($q, $ionicPlatform, NomeBanco){
 
-	function Banco() {
+	function Banco(){
 
 		var db;
-		var nome = "exercicio.db";
+		var nome = NomeBanco;
 
 		//Instancia conforme a plataforma
 		if(window.sqlitePlugin) {
@@ -17,11 +17,12 @@ services.factory('Banco', function($q){
 		else
 			db = window.openDatabase(nome, '1', 'descricao', 1024*1024*100);
 
-		this.criaBanco = function() {
+		this.criaBanco = function(){
 
 			var query  = "CREATE TABLE IF NOT EXISTS usuarios (";
-				query += "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "; 
+				query += "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ";
 				query += "nome TEXT NOT NULL, ";
+				query += "senha TEXT NOT NULL, ";
 				query += "foto BLOB NULL, ";
 				query += "email TEXT NOT NULL)";
 
@@ -29,20 +30,21 @@ services.factory('Banco', function($q){
 
 		}
 
-		this.buscar = function(id) {
+		this.buscar = function(id){
 			var q = $q.defer();
 
-			var sql = 'SELECT id, nome, foto, email FROM usuarios';
+			var sql = 'SELECT id, nome, senha, foto, email FROM usuarios';
 
-			if(id) {
+			if(id){
 				sql += ' WHERE id = ?';
-				id = [id];
+				id  = [id];
 			}
 
 			__executaQuery(sql, id).then(function(resultado){
 
-				var total = resultado.rows.length;
-				if(total > 0) {
+				var total = resultado.rows ? resultado.rows.length : 0;
+
+				if(total > 0){
 
 					var retorno = [];
 
@@ -55,24 +57,24 @@ services.factory('Banco', function($q){
 				else
 					q.resolve(false);
 
-			}, q.reject)
+			}, q.reject);
 
 			return q.promise;
 		}
 
-		this.salvar = function(Usuario) {
+		this.salvar = function(Usuario){
 
-			var binds = [Usuario.nome, Usuario.email, Usuario.foto];
+			var binds = [Usuario.nome, Usuario.senha, Usuario.foto, Usuario.email];
 
-			if(Usuario.id) {
-				var sql = "UPDATE usuarios SET nome = ?, email = ?, foto = ? WHERE id = ?";
+			var sql = "";
+			if(Usuario.id){
+				sql = "UPDATE usuarios SET nome = ?, senha = ?, foto = ?, email = ? WHERE id = ?";
 				binds.push(Usuario.id);
 			}
 			else
-				var sql = "INSERT INTO usuarios (nome, email, foto) VALUES (?, ?, ?)";
+				sql = "INSERT INTO usuarios (nome, senha, foto, email) VALUES (?, ?, ?, ?)";
 
 			return __executaQuery(sql, binds);
-
 		}
 
 		this.apagar = function(id){
@@ -80,17 +82,19 @@ services.factory('Banco', function($q){
 		}
 
 		var __executaQuery = function(query, dados){
+
 			var q = $q.defer();
 
 			db.transaction(function(transacao){
 				transacao.executeSql(query, dados, function(transacao, resultado){
 					q.resolve(resultado);
-				}, function(transacao, erro){
-					q.reject(erro);
+				}, function(transacao, resultado){
+					q.reject(resultado);
 				});
 			});
 
 			return q.promise;
+
 		}
 
 	}

@@ -1,17 +1,15 @@
 services.factory('Camera', function($q){
 
 	return {
-		buscarFoto: function(){
-
-			var opcoes = {quality : 70, targetWidth: 200, targetHeigth: 200, saveToPhotoAlbum: true, destinationType: Camera.DestinationType.DATA_URL};
-
+		buscarFoto : function(){
 			var q = $q.defer();
 
-			navigator.camera.getPicture(function(result){
-				q.resolve(result);
-			}, function(erro){
-				q.reject(erro);
-			}, opcoes);
+			var opcoes  = {
+				quality : 80, targetWidth: 300, targetHeigth: 300, saveToPhotoAlbum : true,
+				destinationType: Camera.DestinationType.DATA_URL
+			};
+
+			navigator.camera.getPicture(q.resolve, q.reject, opcoes);
 
 			return q.promise;
 		}

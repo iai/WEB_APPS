@@ -1,9 +1,11 @@
-controllers.controller('AplicativoController', function($scope, Banco){
+controllers.controller('AplicativoController', function($scope, $ionicPlatform, Banco){
 
-	Banco.criaBanco().then(function(sucesso){
-		console.log('Criou o banco');
-	}, function(erro){
-		console.error(erro);
-	});
+    $ionicPlatform.ready(function(){
+        Banco.criaBanco().then(function(sucesso){
+            console.log('Criou o banco');
+        }, function(erro){
+            console.error(erro);
+        });
+    });
 
 });

@@ -1,25 +1,28 @@
-controllers.controller('FormularioController', function($scope, Banco, $stateParams, $ionicPlatform, Camera){
+controllers.controller('FormularioController', function($scope, Camera, Banco, $stateParams, $ionicPlatform){
+
+	$scope.Usuario = {};
 
 	var id = $stateParams.id;
 
 	$scope.sucesso = false;
-	$scope.Usuario = {};
-
+	
 	if(id) {
 		$ionicPlatform.ready(function(){
 			Banco.buscar(id).then(function(resultado){
-				if(resultado[0])
+				if(resultado[0]){
 					$scope.Usuario = resultado[0];
+					$scope.Usuario.confirmaSenha = $scope.Usuario.senha;
+				}
 			}, function(erro){
 				console.error(erro);
 			});
 		});
 	}
 
-	$scope.salvar = function(valido, Usuario){
+	$scope.salvar = function(valido){
 
 		if(valido){
-			Banco.salvar(Usuario).then(function(resultado){
+			Banco.salvar($scope.Usuario).then(function(resultado){
 				$scope.sucesso = true;
 			}, function(erro){
 				console.error(erro);
@@ -29,7 +32,7 @@ controllers.controller('FormularioController', function($scope, Banco, $statePar
 	};
 
 	$scope.limpar = function(formulario){
-		$scope.Usuario = {nome : '', email : '', foto : ''};
+		$scope.Usuario = {};
 		formulario.$setPristine();
 		$scope.sucesso = false;
 	}
@@ -41,5 +44,4 @@ controllers.controller('FormularioController', function($scope, Banco, $statePar
 			console.error(erro);
 		})
 	}
-
 });

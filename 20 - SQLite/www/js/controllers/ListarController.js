@@ -1,67 +1,40 @@
-controllers.controller('ListarController', function($scope, Banco, $ionicPlatform, $timeout, $ionicPopup){
+controllers.controller('ListarController', function($scope, Banco, $ionicPlatform, $ionicPopup){
 
-	$scope.dados = null;
-	$scope.atualizar = function() {
-		Banco.buscar().then(function(resultado){
-			$scope.dados          = resultado;
-			$scope.dadosFiltrados = $scope.dados;
-			$scope.$broadcast('scroll.refreshComplete');
-		}, function(erro){
-			console.error(erro);
-		});
-	}
+    $scope.dados = [];
+    $scope.atualizar = function() {
+        Banco.buscar().then(function(resultado){
+            $scope.dados          = resultado;
+            $scope.$broadcast('scroll.refreshComplete');
+        }, function(erro){
+            console.error(erro);
+        });
+    }
 
-	$ionicPlatform.ready(function(){
-		$scope.atualizar();
-	});
+    $ionicPlatform.ready(function(){
+        $scope.atualizar();
+    });
 
-	$scope.filtrar = function(){
-		var texto = $scope.buscar;
+    $scope.limparFiltro = function(){
+        $scope.buscar = '';
+    }
 
-		if(texto == "")
-			$scope.dadosFiltrados = $scope.dados;
-		else {
+    $scope.apagar = function(id){
 
-			var matches = $scope.dados.filter(function(usuario){
+        var confirma = $ionicPopup.confirm({
+            title : 'Tem certeza?',
+            template: 'Deseja realmente excluir?'
+        });
 
-				//Nome
-				if(usuario.nome.toLowerCase().indexOf(texto.toLowerCase()) !== -1)
-					return true;
+        confirma.then(function(confirmou){
+            if(confirmou) {
+                Banco.apagar(id).then(function(){
+                    $scope.atualizar();
+                }, function(erro){
+                    console.error(erro);
+                });
+            }
+        })
 
-				//E-mail
-				if(usuario.email.toLowerCase().indexOf(texto.toLowerCase()) !== -1)
-					return true;
-
-			});
-
-			$timeout(function(){
-				$scope.dadosFiltrados = matches;
-			}, 100);
-		}
-	}
-
-	$scope.limparFiltro = function(){
-		$scope.buscar = '';
-		$scope.dadosFiltrados = $scope.dados;
-	}
-
-	$scope.apagar = function(id){
-
-		var confirma = $ionicPopup.confirm({
-			title : 'Tem certeza?',
-			template: 'Deseja realmente excluir?'
-		});
-
-		confirma.then(function(confirmou){
-			if(confirmou) {
-				Banco.apagar(id).then(function(){
-					$scope.atualizar();
-				}, function(erro){
-					console.error(erro);
-				});
-			}
-		})
-
-	}
+    }
 
 });
