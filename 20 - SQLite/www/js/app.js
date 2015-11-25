@@ -9,7 +9,7 @@ var services    = angular.module('SQLite.services', []);
 var directives  = angular.module('SQLite.directives', []);
 var providers   = angular.module('SQLite.providers', []);
 
-app.run(function($ionicPlatform) {
+app.run(function($ionicPlatform, $state, $rootScope) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -19,12 +19,25 @@ app.run(function($ionicPlatform) {
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+
+    $rootScope.$on('$stateChangeStart', function(evento, estadoDestino){
+
+        var estadosPermitidos = ['login'];
+        if(estadosPermitidos.indexOf(estadoDestino.name) === -1 && 
+          !UsuarioBean.getNome() && !UsuarioBean.getLogado()){
+            evento.preventDefault();
+            $state.go('login');
+        }
+    });
+
   });
 });
 
+app.constant('EnderecoAPI', {url : 'http://eu.querorock.com/api/'});
+
 app.config(function($stateProvider, $urlRouterProvider, NomeBancoProvider){
 
-  NomeBancoProvider.setBanco('exercicio.db');
+  NomeBancoProvider.setBanco('exericio9.db');
 
   $stateProvider.state('aplicativo', {
     url: '/aplicativo',
@@ -33,9 +46,15 @@ app.config(function($stateProvider, $urlRouterProvider, NomeBancoProvider){
     controller: 'AplicativoController'
   });
 
+  $stateProvider.state('login', {
+    url: '/login',
+    templateUrl: 'views/login.html',
+    controller: 'LoginController'
+  });
+
   $stateProvider.state('aplicativo.inserir', {
     url: '/inserir',
-    views : {
+    views: {
       'conteudoMenu' : {
         templateUrl: 'views/formulario.html',
         controller: 'FormularioController'
@@ -45,7 +64,7 @@ app.config(function($stateProvider, $urlRouterProvider, NomeBancoProvider){
 
   $stateProvider.state('aplicativo.editar', {
     url: '/editar/:id',
-    views : {
+    views: {
       'conteudoMenu' : {
         templateUrl: 'views/formulario.html',
         controller: 'FormularioController'
@@ -55,7 +74,7 @@ app.config(function($stateProvider, $urlRouterProvider, NomeBancoProvider){
 
   $stateProvider.state('aplicativo.listar', {
     url: '/listar',
-    views : {
+    views: {
       'conteudoMenu' : {
         templateUrl: 'views/listar.html',
         controller: 'ListarController'
@@ -63,6 +82,8 @@ app.config(function($stateProvider, $urlRouterProvider, NomeBancoProvider){
     }
   });
 
-  $urlRouterProvider.otherwise('/aplicativo/inserir');
-
-});
+  if(UsuarioBean.getNome() && UsuarioBean.getLogado())
+    $urlRouterProvider.otherwise('/aplicativo/inserir');
+  else
+    $urlRouterProvider.otherwise('/login');
+})

@@ -1,40 +1,41 @@
 controllers.controller('ListarController', function($scope, Banco, $ionicPlatform, $ionicPopup){
 
-    $scope.dados = [];
-    $scope.atualizar = function() {
-        Banco.buscar().then(function(resultado){
-            $scope.dados          = resultado;
-            $scope.$broadcast('scroll.refreshComplete');
-        }, function(erro){
-            console.error(erro);
-        });
-    }
+	$scope.dados  = [];
+	$scope.buscar = '';
 
-    $ionicPlatform.ready(function(){
-        $scope.atualizar();
-    });
+	$scope.atualizar = function(){
+		Banco.buscar().then(function(resultado){
+			if(resultado)
+				$scope.dados = resultado;
+			$scope.$broadcast('scroll.refreshComplete');
+		}, function(erro){
+			console.error(erro);
+		});
+	}
 
-    $scope.limparFiltro = function(){
-        $scope.buscar = '';
-    }
+	$ionicPlatform.ready(function(){
+		$scope.atualizar();
+	});
 
-    $scope.apagar = function(id){
+	$scope.limparFiltro = function(){
+		$scope.buscar = '';
+	}
 
-        var confirma = $ionicPopup.confirm({
-            title : 'Tem certeza?',
-            template: 'Deseja realmente excluir?'
-        });
+	$scope.apagar = function(id){
 
-        confirma.then(function(confirmou){
-            if(confirmou) {
-                Banco.apagar(id).then(function(){
-                    $scope.atualizar();
-                }, function(erro){
-                    console.error(erro);
-                });
-            }
-        })
+		$ionicPopup.confirm({
+			title : 'Tem certeza?',
+			template : 'Deseja realmente excluir?'
+		}).then(function(confirmou){
+			if(confirmou){
+				Banco.apagar(id).then(function(){
+					$scope.atualizar();
+				}, function(erro){
+					console.error(erro);
+				})
+			}
+		})
 
-    }
+	}
 
 });

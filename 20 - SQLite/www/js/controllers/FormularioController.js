@@ -1,22 +1,29 @@
 controllers.controller('FormularioController', function($scope, Camera, Banco, $stateParams, $ionicPlatform){
 
 	$scope.Usuario = {};
+	$scope.sucesso = false;
 
 	var id = $stateParams.id;
 
-	$scope.sucesso = false;
-	
-	if(id) {
+	if(id){
 		$ionicPlatform.ready(function(){
 			Banco.buscar(id).then(function(resultado){
-				if(resultado[0]){
-					$scope.Usuario = resultado[0];
-					$scope.Usuario.confirmaSenha = $scope.Usuario.senha;
-				}
+				console.log(resultado);
+				$scope.Usuario = resultado[0];
+				$scope.Usuario.confirmaSenha = $scope.Usuario.senha;
 			}, function(erro){
 				console.error(erro);
 			});
-		});
+		})
+	}
+
+	$scope.tirarFoto = function(){
+		Camera.buscarFoto().then(function(base64Foto){
+			$scope.Usuario.foto = base64Foto;
+			console.log(base64Foto);
+		}, function(erro){
+			console.error(erro);
+		})
 	}
 
 	$scope.salvar = function(valido){
@@ -26,10 +33,10 @@ controllers.controller('FormularioController', function($scope, Camera, Banco, $
 				$scope.sucesso = true;
 			}, function(erro){
 				console.error(erro);
-			});
+			})
 		}
 
-	};
+	}
 
 	$scope.limpar = function(formulario){
 		$scope.Usuario = {};
@@ -37,11 +44,4 @@ controllers.controller('FormularioController', function($scope, Camera, Banco, $
 		$scope.sucesso = false;
 	}
 
-	$scope.tirarFoto = function(){
-		Camera.buscarFoto().then(function(baseFoto){
-			$scope.Usuario.foto = baseFoto;
-		}, function(erro){
-			console.error(erro);
-		})
-	}
 });
