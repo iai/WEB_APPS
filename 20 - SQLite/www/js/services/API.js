@@ -35,7 +35,7 @@ services.factory('API', function($q, $http, EnderecoAPI){
 			headers["Hash"] = hash;
 
 			$http({
-				url : EnderecoAPI.url + '/' + metodo,
+				url : EnderecoAPI.url + metodo,
 				headers : headers,
 				method : "POST",
 				data : dados

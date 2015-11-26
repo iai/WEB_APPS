@@ -35,6 +35,45 @@ services.factory('Banco', function($q, $ionicPlatform, NomeBanco){
 
 		}
 
+		this.ultimoID = function(){
+			return __executaQuery("SELECT MAX(idWS) AS id FROM usuarios");
+		}
+
+		this.itensNaoSincronizados = function(){
+			return __executaQuery("SELECT id, nome, senha, foto, email FROM usuarios WHERE sincronizado IS NULL");
+		}
+
+		this.setaSincronizacao = function(idWS, id){
+			return __executaQuery("UPDATE usuarios SET sincronizado = 1, idWS = ? WHERE id = ?", [idWS, id]);
+		}
+
+		this.inserirVarios = function(dados){
+
+			var q = $q.defer();
+
+			//Monta o sql
+			var sql = "INSERT INTO usuarios (nome, imagem, email, sincronizado, idWS) VALUES (?, ?, ?, ?, ?)";
+
+			//Monta as promessas
+			var promessas = [];
+			for(var temp in dados){
+
+				//Monta os dados
+				var item  = dados[temp];
+				var binds = [item.Nome, item.Imagem, item.Email, 1, item.id]; 
+
+				//Adiciona a promessa
+				promessas.push(__executaQuery(sql, binds));
+
+			}
+
+			//Executa tudo
+			$q.all(promessas).then(q.resolve, q.reject);
+
+			return q.promise;
+
+		}
+
 		this.login = function(email, senha){
 
 			var q = $q.defer();
@@ -62,18 +101,6 @@ services.factory('Banco', function($q, $ionicPlatform, NomeBanco){
 
 			return q.promise;
 
-		}
-
-		this.ultimoID = function(){
-			return __executaQuery("SELECT MAX(idWS) as id FROM usuarios");
-		}
-
-		this.itensNaoSincronizados = function(){
-			return __executaQuery("SELECT id, nome, senha, foto, email FROM usuarios WHERE sincronizado IS NULL");
-		}
-
-		this.setaSincronizacao = function(ids){
-			return __executaQuery("UPDATE usuarios SET sincronizado = 1 WHERE id IN ("+ids.join(',')+')');
 		}
 
 		this.buscar = function(id){
@@ -106,32 +133,6 @@ services.factory('Banco', function($q, $ionicPlatform, NomeBanco){
 			}, q.reject);
 
 			return q.promise;
-		}
-
-		this.inserirVarios = function(dados){
-
-			var q = $q.defer();
-
-			//Monta o sql
-			var sql = "INSERT INTO usuarios (nome, imagem, email, sincronizado, idWS) VALUES (?, ?, ?, ?, ?)";
-
-			//Monta as promessas
-            var promessas = [];
-            for(var temp in dados) {
-
-            	//Monta os dados
-            	var item = dados[temp];
-            	var binds = [item.Nome, item.Imagem, item.Email, 1, item.id];
-
-            	//Adiciona a promessa
-                promessas.push(__executaQuery(sql, binds));
-            }
-            
-            //Executa tudo
-            $q.all(promessas).then(q.resolve, q.reject);
-
-            return q.promise;
-
 		}
 
 		this.salvar = function(Usuario){

@@ -20,21 +20,20 @@ controllers.controller('AplicativoController', function($scope, $ionicPlatform, 
 
 		$ionicLoading.show();
 
-		var promessas = [Sincronizador.download(), Sincronizador.upload()]
+		var promessas = [Sincronizador.download(), Sincronizador.upload()];
 
 		$q.all(promessas).then(function(sucesso){
 			console.log(sucesso);
-			
 			$ionicPopup.alert({
 				title: 'Sucesso!',
-				template: 'Dados sincronizados com sucesso!'
+				template : 'Dados sincronizados com sucesso!'
 			});
 
 			$ionicLoading.hide();
 		}, function(erro){
 			console.error(erro);
 			$ionicLoading.hide();
-		});
+		})
 
 	}
 

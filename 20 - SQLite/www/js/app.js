@@ -37,7 +37,7 @@ app.constant('EnderecoAPI', {url : 'http://eu.querorock.com/api/'});
 
 app.config(function($stateProvider, $urlRouterProvider, NomeBancoProvider){
 
-  NomeBancoProvider.setBanco('exericio9.db');
+  NomeBancoProvider.setBanco('aulawebapps.db');
 
   $stateProvider.state('aplicativo', {
     url: '/aplicativo',
