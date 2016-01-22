@@ -76,7 +76,7 @@ angular.module('WebService', ['ionic', 'WebService.controllers', 'WebService.ser
 
 })
 */
-.constant('EnderecoAPI', {url : 'http://eu.querorock.com/api/'})
+.constant('EnderecoAPI', {url : 'http://sistema-stage.medicon.com.br/api_curso/'})
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 

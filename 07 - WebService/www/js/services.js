@@ -4,8 +4,8 @@ meuServico.factory('Usuarios', function($http, $q, EnderecoAPI){
 
 	function Usuarios() {
 
-		var hash_listar = "Hash=34a4d9f3b9658c7c0237aa031ab77046";
-		var hash_salvar = "Hash=ea604dc1e9d0d36bb4e076450d135fa6";
+		var hash_listar = "Hash=ec28a389ac568b42541edc862e7175a8";
+		var hash_salvar = "Hash=c18cb0b3ba476e5bc451c54ea2a9c251";
 
 		this.todos = function() {
 			return __callAPI('listar_usuarios', hash_listar);
